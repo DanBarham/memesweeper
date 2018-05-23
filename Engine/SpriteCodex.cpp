@@ -1475,9 +1475,10 @@ void SpriteCodex::DrawTileBombRed( const Vei2& pos,Graphics& gfx )
 	gfx.PutPixel( 15 + pos.x,15 + pos.y,255,0,0 );
 }
 
-void SpriteCodex::DrawTileNumber( const Vei2& pos,int n,Graphics& gfx )
+void SpriteCodex::DrawTileNumber(const Vei2 & pos, int n, Graphics & gfx)
 {
 	assert( n >= 0 && n <= 8 );
+
 	switch( n )
 	{
 	case 0:
