@@ -210,6 +210,24 @@ void MemeField::OnFlagClick(const Vei2 screenPos)
 	}
 }
 
+bool MemeField::CheckWinCondition()
+{
+	bool haveWon = true;
+
+	for( int x = 0; x < width; ++x )
+	{
+		for( int y = 0; y < height; ++y )
+		{
+			if ( !TileAt( { x,y } ).HasMeme() && !TileAt( { x,y } ).IsRevealed() )
+			{
+				haveWon = false;
+			}
+		}
+	}
+
+	return haveWon;
+}
+
 MemeField::Tile& MemeField::TileAt( const Vei2& gridPos )
 {
 	return field[ gridPos.y * width + gridPos.x ];

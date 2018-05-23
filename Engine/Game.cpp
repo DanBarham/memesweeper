@@ -21,13 +21,6 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-/*
-Todo
-
-SFX
-Lose + Win do stuff (sfx / sprites)
-*/
-
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
@@ -76,4 +69,8 @@ void Game::ComposeFrame()
 {
 	field.Draw( gfx );
 	field.DrawBorder( gfx );
+	if( field.CheckWinCondition() )
+	{
+		SpriteCodex::DrawWin( { Graphics::ScreenWidth / 2,Graphics::ScreenHeight / 2 },gfx );
+	}
 }
