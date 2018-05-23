@@ -104,6 +104,11 @@ bool MemeField::Tile::IsFlagged() const
 	return state == State::FLAGGED;
 }
 
+bool MemeField::Tile::HasNoNeighborMemes() const
+{
+	return neighborMemes == 0;
+}
+
 void MemeField::Tile::SetNeighborMemeCount( int memeCount )
 {
 	assert( neighborMemes == -1 );
@@ -185,7 +190,7 @@ bool MemeField::OnRevealClick( const Vei2 screenPos )
 		Tile& tile = TileAt( gridPos );
 		if( !tile.IsRevealed()  && !tile.IsFlagged() )
 		{
-			tile.Reveal();
+			RevealTile( gridPos );
 			if( tile.HasMeme() )
 			{
 				isFucked = true;
@@ -225,6 +230,30 @@ bool MemeField::CheckWinCondition()
 	}
 
 	return true;
+}
+
+void MemeField::RevealTile(const Vei2 & gridPos)
+{
+	Tile& tile = TileAt( gridPos );
+	tile.Reveal();
+	if( tile.HasNoNeighborMemes() )
+	{
+		const int xStart = std::max( 0,gridPos.x - 1 );
+		const int yStart = std::max( 0,gridPos.y - 1 );
+		const int xEnd = std::min( width - 1,gridPos.x + 1 );
+		const int yEnd = std::min( height - 1,gridPos.y + 1 );
+
+		for ( Vei2 gridPos = { xStart,yStart }; gridPos.y <= yEnd; ++gridPos.y )
+		{
+			for( gridPos.x = xStart; gridPos.x <= xEnd; ++gridPos.x )
+			{
+				if( !TileAt( gridPos ).IsRevealed() )
+				{
+					RevealTile( gridPos );
+				}
+			}
+		}
+	}
 }
 
 MemeField::Tile& MemeField::TileAt( const Vei2& gridPos )
