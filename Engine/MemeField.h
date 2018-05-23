@@ -3,6 +3,7 @@
 #include "Graphics.h"
 #include "Vei2.h"
 #include "RectI.h"
+#include "SpriteCodex.h"
 
 class MemeField
 {
@@ -44,6 +45,8 @@ private:
 private:
 	static constexpr int width = 20;
 	static constexpr int height = 16;
+	static constexpr int xOffset = Graphics::ScreenWidth / 2 - (width * SpriteCodex::tileSize) / 2;
+	static constexpr int yOffset = Graphics::ScreenHeight / 2 - (height * SpriteCodex::tileSize) / 2;
 	bool isFucked = false;
 	Tile field[ width * height ];
 };

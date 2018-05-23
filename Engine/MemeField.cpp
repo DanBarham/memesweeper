@@ -1,7 +1,6 @@
 #include "MemeField.h"
 #include <assert.h>
 #include <random>
-#include "SpriteCodex.h"
 
 void MemeField::Tile::SpawnMeme()
 {
@@ -148,14 +147,15 @@ void MemeField::Draw( Graphics& gfx ) const
 	{
 		for( gridPos.x = 0; gridPos.x < width; ++gridPos.x )
 		{
-			TileAt( gridPos ).Draw( gridPos * SpriteCodex::tileSize,isFucked,gfx );
+			const Vei2 screenPosOffset = { (gridPos.x * SpriteCodex::tileSize) + xOffset,(gridPos.y * SpriteCodex::tileSize) + yOffset };
+			TileAt( gridPos ).Draw( screenPosOffset,isFucked,gfx );
 		}
 	}
 }
 
 RectI MemeField::GetRect() const
 {
-	return RectI( 0,width * SpriteCodex::tileSize,0,height * SpriteCodex::tileSize );
+	return RectI( xOffset,width * SpriteCodex::tileSize + xOffset,yOffset,height * SpriteCodex::tileSize + yOffset );
 }
 
 void MemeField::OnRevealClick( const Vei2 screenPos )
@@ -183,7 +183,7 @@ void MemeField::OnFlagClick(const Vei2 screenPos)
 	{
 		const Vei2 gridPos = ScreenToGrid(screenPos);
 
-		assert(gridPos.x > 0 && gridPos.x < width && gridPos.y > 0 && gridPos.y < height);
+		assert(gridPos.x >= 0 && gridPos.x < width && gridPos.y >= 0 && gridPos.y < height);
 		Tile& tile = TileAt(gridPos);
 		if (!tile.IsRevealed())
 		{
@@ -202,9 +202,10 @@ const MemeField::Tile& MemeField::TileAt( const Vei2& gridPos ) const
 	return field[ gridPos.y * width + gridPos.x ];
 }
 
-Vei2 MemeField::ScreenToGrid(const Vei2& screenPos)
+Vei2 MemeField::ScreenToGrid( const Vei2& screenPos )
 {
-	return screenPos / SpriteCodex::tileSize;
+	const Vei2 screenPosOffset = { screenPos.x - xOffset,screenPos.y - yOffset };
+	return (screenPosOffset / SpriteCodex::tileSize);
 }
 
 int MemeField::CountNeighborMemes( const Vei2& gridPos )

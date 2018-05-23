@@ -21,6 +21,14 @@
 #include "MainWindow.h"
 #include "Game.h"
 
+/*
+Todo
+
+Border
+SFX
+Lose + Win do stuff (sfx / sprites)
+*/
+
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
