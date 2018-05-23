@@ -40,12 +40,13 @@ void MemeField::Tile::Draw( const Vei2& screenPos,Graphics& gfx ) const
 
 void MemeField::Tile::Reveal()
 {
+	assert( state == State::HIDDEN );
 	state = State::REVEALED;
 }
 
 bool MemeField::Tile::IsRevealed() const
 {
-	return state != State::HIDDEN;
+	return state == State::REVEALED;
 }
 
 MemeField::MemeField( int nMemes )
