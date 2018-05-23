@@ -36,9 +36,8 @@ public:
 private:
 	enum class GameState
 	{
-		PLAYING,
-		WIN,
-		LOSE
+		MEMEING,
+		WINRAR
 	};
 	void ComposeFrame();
 	void UpdateModel();
@@ -52,6 +51,6 @@ private:
 	/*  User Variables              */
 	MemeField field;
 	Sound youFuckingLose;
-	GameState state = GameState::PLAYING;
+	GameState state = GameState::MEMEING;
 	/********************************/
 };

@@ -40,7 +40,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if( state == GameState::PLAYING )
+	if( state == GameState::MEMEING )
 	{
 		while( !wnd.mouse.IsEmpty() )
 		{
@@ -50,22 +50,21 @@ void Game::UpdateModel()
 				const Vei2 mousePos = wnd.mouse.GetPos();
 				if ( field.GetRect().Contains( mousePos ) )
 				{
-					if( field.OnRevealClick( mousePos ) )
+					if( field.OnRevealClick( mousePos ) )	//Returns a bool if you click on a meme
 					{
 						youFuckingLose.Play();
-						state = GameState::LOSE;
 					}
 
 					if( field.CheckWinCondition() )
 					{
-						state = GameState::WIN;
+						state = GameState::WINRAR;
 					}
 				}
 			}
 			else if( e.GetType() == Mouse::Event::Type::RPress )
 			{
 				const Vei2 mousePos = wnd.mouse.GetPos();
-				if (field.GetRect().Contains( mousePos ))
+				if( field.GetRect().Contains( mousePos ) )
 				{
 					field.OnFlagClick( mousePos );
 				}
@@ -78,7 +77,7 @@ void Game::ComposeFrame()
 {
 	field.Draw( gfx );
 	field.DrawBorder( gfx );
-	if( state == GameState::WIN )
+	if( state == GameState::WINRAR )
 	{
 		SpriteCodex::DrawWin( { Graphics::ScreenWidth / 2,Graphics::ScreenHeight / 2 },gfx );
 	}
