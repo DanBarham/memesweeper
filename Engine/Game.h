@@ -34,6 +34,12 @@ public:
 	Game& operator=( const Game& ) = delete;
 	void Go();
 private:
+	enum class GameState
+	{
+		PLAYING,
+		WIN,
+		LOSE
+	};
 	void ComposeFrame();
 	void UpdateModel();
 	/********************************/
@@ -46,5 +52,6 @@ private:
 	/*  User Variables              */
 	MemeField field;
 	Sound youFuckingLose;
+	GameState state = GameState::PLAYING;
 	/********************************/
 };

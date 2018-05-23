@@ -40,26 +40,35 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	while( !wnd.mouse.IsEmpty() )
+	if( state == GameState::PLAYING )
 	{
-		const Mouse::Event e = wnd.mouse.Read();
-		if( e.GetType() == Mouse::Event::Type::LPress )
+		while( !wnd.mouse.IsEmpty() )
 		{
-			const Vei2 mousePos = wnd.mouse.GetPos();
-			if ( field.GetRect().Contains( mousePos ) )
+			const Mouse::Event e = wnd.mouse.Read();
+			if( e.GetType() == Mouse::Event::Type::LPress )
 			{
-				if( field.OnRevealClick( mousePos ) )
+				const Vei2 mousePos = wnd.mouse.GetPos();
+				if ( field.GetRect().Contains( mousePos ) )
 				{
-					youFuckingLose.Play();
+					if( field.OnRevealClick( mousePos ) )
+					{
+						youFuckingLose.Play();
+						state = GameState::LOSE;
+					}
+
+					if( field.CheckWinCondition() )
+					{
+						state = GameState::WIN;
+					}
 				}
 			}
-		}
-		else if( e.GetType() == Mouse::Event::Type::RPress )
-		{
-			const Vei2 mousePos = wnd.mouse.GetPos();
-			if (field.GetRect().Contains( mousePos ))
+			else if( e.GetType() == Mouse::Event::Type::RPress )
 			{
-				field.OnFlagClick( mousePos );
+				const Vei2 mousePos = wnd.mouse.GetPos();
+				if (field.GetRect().Contains( mousePos ))
+				{
+					field.OnFlagClick( mousePos );
+				}
 			}
 		}
 	}
@@ -69,7 +78,7 @@ void Game::ComposeFrame()
 {
 	field.Draw( gfx );
 	field.DrawBorder( gfx );
-	if( field.CheckWinCondition() )
+	if( state == GameState::WIN )
 	{
 		SpriteCodex::DrawWin( { Graphics::ScreenWidth / 2,Graphics::ScreenHeight / 2 },gfx );
 	}
