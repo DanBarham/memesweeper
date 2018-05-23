@@ -32,7 +32,8 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	field( 20 )
+	field( 20 ),
+	youFuckingLose( L"spayed.wav" )
 {
 }
 
@@ -54,7 +55,10 @@ void Game::UpdateModel()
 			const Vei2 mousePos = wnd.mouse.GetPos();
 			if ( field.GetRect().Contains( mousePos ) )
 			{
-				field.OnRevealClick( mousePos );
+				if( field.OnRevealClick( mousePos ) )
+				{
+					youFuckingLose.Play();
+				}
 			}
 		}
 		else if( e.GetType() == Mouse::Event::Type::RPress )

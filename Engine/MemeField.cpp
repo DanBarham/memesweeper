@@ -175,7 +175,7 @@ RectI MemeField::GetRect() const
 	return RectI( xOffset,width * SpriteCodex::tileSize + xOffset,yOffset,height * SpriteCodex::tileSize + yOffset );
 }
 
-void MemeField::OnRevealClick( const Vei2 screenPos )
+bool MemeField::OnRevealClick( const Vei2 screenPos )
 {
 	if( !isFucked )
 	{
@@ -192,6 +192,7 @@ void MemeField::OnRevealClick( const Vei2 screenPos )
 			}
 		}
 	}
+	return isFucked;
 }
 
 void MemeField::OnFlagClick(const Vei2 screenPos)

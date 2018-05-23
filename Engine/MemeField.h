@@ -36,7 +36,7 @@ public:
 	void Draw( Graphics& gfx ) const;
 	void DrawBorder( Graphics& gfx ) const;
 	RectI GetRect() const;
-	void OnRevealClick( const Vei2 screenPos );
+	bool OnRevealClick( const Vei2 screenPos );
 	void OnFlagClick( const Vei2 screenPos );
 private:
 	Tile& TileAt( const Vei2& gridPos );

@@ -123,4 +123,9 @@
       <Filter>Shaders\Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="spayed.wav">
+      <Filter>Shaders\Resource Files</Filter>
+    </Media>
+  </ItemGroup>
 </Project>
