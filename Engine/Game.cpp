@@ -40,11 +40,11 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if( state == GameState::MEMEING )
+	while( !wnd.mouse.IsEmpty() )
 	{
-		while( !wnd.mouse.IsEmpty() )
+		const Mouse::Event e = wnd.mouse.Read();
+		if( state == GameState::MEMEING )
 		{
-			const Mouse::Event e = wnd.mouse.Read();
 			if( e.GetType() == Mouse::Event::Type::LPress )
 			{
 				const Vei2 mousePos = wnd.mouse.GetPos();
@@ -53,6 +53,7 @@ void Game::UpdateModel()
 					if( field.OnRevealClick( mousePos ) )	//Returns a bool if you click on a meme
 					{
 						youFuckingLose.Play();
+						state = GameState::FUCKED;
 					}
 
 					if( field.CheckWinCondition() )

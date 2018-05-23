@@ -37,7 +37,8 @@ private:
 	enum class GameState
 	{
 		MEMEING,
-		WINRAR
+		WINRAR,
+		FUCKED
 	};
 	void ComposeFrame();
 	void UpdateModel();
