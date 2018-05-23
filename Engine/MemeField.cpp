@@ -153,6 +153,23 @@ void MemeField::Draw( Graphics& gfx ) const
 	}
 }
 
+void MemeField::DrawBorder( Graphics& gfx ) const
+{
+	const int padding = 5;
+	RectI borderRect = GetRect().GetExpanded( padding );
+
+	for( int x = borderRect.left; x < borderRect.right; ++x )
+	{
+		for( int y = borderRect.top; y < borderRect.bottom; ++y )
+		{
+			if( !GetRect().Contains( { x,y } ) )
+			{
+				gfx.PutPixel( x,y,Colors::Blue );
+			}
+		}
+	}
+}
+
 RectI MemeField::GetRect() const
 {
 	return RectI( xOffset,width * SpriteCodex::tileSize + xOffset,yOffset,height * SpriteCodex::tileSize + yOffset );

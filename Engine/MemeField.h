@@ -34,6 +34,7 @@ private:
 public:
 	MemeField( int nMemes );
 	void Draw( Graphics& gfx ) const;
+	void DrawBorder( Graphics& gfx ) const;
 	RectI GetRect() const;
 	void OnRevealClick( const Vei2 screenPos );
 	void OnFlagClick( const Vei2 screenPos );
@@ -43,8 +44,8 @@ private:
 	Vei2 ScreenToGrid( const Vei2& screenPos );
 	int CountNeighborMemes( const Vei2& gridPos );
 private:
-	static constexpr int width = 20;
-	static constexpr int height = 16;
+	static constexpr int width = 10;
+	static constexpr int height = 8;
 	static constexpr int xOffset = Graphics::ScreenWidth / 2 - (width * SpriteCodex::tileSize) / 2;
 	static constexpr int yOffset = Graphics::ScreenHeight / 2 - (height * SpriteCodex::tileSize) / 2;
 	bool isFucked = false;
